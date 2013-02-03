@@ -14,7 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             @user = User.find_or_create_for_#{provider}(env["omniauth.auth"])
 
             if @user.persisted?
-              current_user.authorizations.
+              @user.authorizations.
                 find_by_provider(#{provider}).
                 token = env["omniauth.auth"]["credentials"]["token"]
               current_user.save!
