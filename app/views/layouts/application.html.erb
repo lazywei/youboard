@@ -49,7 +49,7 @@
                   <%= button_to "Subscribe", subscribe_path, :metohd => :post, :class => "btn" %>
                 </p>
                 <p>
-                <%= link_to "Check your personal playlist", "http://www.youtube.com/playlist?list=#{current_user.playlist}", :class => "btn" unless current_user.playlist.nil? %>
+                <%= link_to "Check your personal playlist", "http://www.youtube.com/playlist?list=#{current_user.playlist}", :class => "btn", :target => :_blank unless current_user.playlist.nil? %>
                 </p>
               <% else %>
                 <p>
