@@ -46,12 +46,19 @@
             <%= yield %>
           </div>
           <div class="span3">
-            <div class="well sidebar-nav">
-              <ul class="nav nav-list">
-                <li><%= link_to "Sign in with Youtube", user_omniauth_authorize_path(:google_oauth2) %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
-              </ul>
+            <div class="well sidebar-nav btn-group">
+              <% if user_signed_in? %>
+                <p>
+                  <%= link_to "Logout", logout_path, :class => "btn" %>
+                </p>
+                <p>
+                  <%= button_to "Subscribe", subscribe_path, :metohd => :post, :class => "btn" %>
+                </p>
+              <% else %>
+                <p>
+                  <%= link_to "Sign in with Youtube", user_omniauth_authorize_path(:google_oauth2), :class => "btn" %>
+                </p>
+              <% end %>
             </div><!--/.well -->
           </div><!--/span-->
         </div><!--/row-->

@@ -56,3 +56,7 @@ gem 'devise', '~> 2.1.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+
+gem 'youtube_it'
+gem 'nokogiri'
+gem 'typhoeus'

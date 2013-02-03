@@ -1,7 +1,12 @@
 # -*- encoding : utf-8 -*-
 Youboard::Application.routes.draw do
   root :to => 'welcome#index'
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get "logout" => "devise/sessions#destroy"
+  end
+
+  post "subscribe" => "welcome#subscribe"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
