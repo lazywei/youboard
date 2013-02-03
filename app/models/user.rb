@@ -27,6 +27,12 @@ class User < ActiveRecord::Base
     authorizations.find_or_create_by_provider_and_uid!(provider, uid)
   end
 
+  def update_token(response)
+    provider = response["provider"]
+    auth = authorizations.find_by_provider(provider)
+    auth.update_attributes(:token => response["credentials"]["token"])
+  end
+
   def can_bind_to
     Setting.providers - (self.authorizations.map {|auth| auth.provider})
   end

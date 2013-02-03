@@ -234,6 +234,6 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :facebook, Setting.facebook_token, Setting.facebook_secret
-  config.omniauth :google_oauth2, Setting.google_oauth2_token, Setting.google_oauth2_secret, {:scope => 'https://gdata.youtube.com https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'}
+  config.omniauth :google_oauth2, Setting.google_oauth2_token, Setting.google_oauth2_secret, {:scope => 'https://gdata.youtube.com https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile', :approval_prompt=>"force"}
 
 end
