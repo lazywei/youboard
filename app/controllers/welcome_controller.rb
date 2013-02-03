@@ -47,19 +47,21 @@ class WelcomeController < ApplicationController
       end
       prepare_request(r, builder1).run
 
-      builder2 = Nokogiri::XML::Builder.new do |xml|
-        xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
-          xml["batch"].operation("type"=>"update")
-          to_del1.each do |v|
-            xml.entry {
-              xml["batch"].operation("type"=>"delete")
-              xml.id_ v.video_id
-              xml.link("rel" => "edit", "type" => "application/atom+xml", "href" => "https://gdata.youtube.com/feeds/api/playlists/#{pid}/#{v.in_playlist_id}?v=2")
-            }
-          end
-        }
+      unless to_del1.nil?
+        builder2 = Nokogiri::XML::Builder.new do |xml|
+          xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
+            xml["batch"].operation("type"=>"update")
+            to_del1.each do |v|
+              xml.entry {
+                xml["batch"].operation("type"=>"delete")
+                xml.id_ v.video_id
+                xml.link("rel" => "edit", "type" => "application/atom+xml", "href" => "https://gdata.youtube.com/feeds/api/playlists/#{pid}/#{v.in_playlist_id}?v=2")
+              }
+            end
+          }
+        end
+        prepare_request(r, builder2).run
       end
-      prepare_request(r, builder2).run
 
       unless to_add2.nil?
         builder3 = Nokogiri::XML::Builder.new do |xml|
