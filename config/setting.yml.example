@@ -1,0 +1,29 @@
+defaults: &defaults
+  facebook_token: "012345678987654"
+  facebook_secret: "1a2b3c4d5e6f7g8h9i12345678987654"
+  google_oauth2_token: "012345678987654"
+  google_oauth2_secret: "1a2b3c4d5e6f7g8h9i12345678987654"
+  providers: ["facebook", "google_oauth2"]
+
+  app_name: ""
+  host: "localhost"
+  facebook_app_id: 
+  facebook_secret: 
+  facebook_perms: ''
+  admin_emails: 
+    - ""
+  google_analytics_key: ""
+  default_logo_url: "/logo.png"
+  email: ""
+  aws: ""
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+
