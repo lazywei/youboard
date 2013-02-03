@@ -23,35 +23,17 @@ class WelcomeController < ApplicationController
       },
     )
 
-      # Prepare data for batch api (batch can at most contain 50 entries)
-      #
-      to_add1 = Hot.last.songs.slice(0,50)
-      to_add2 = Hot.last.songs.slice(50,50)
-      to_del1 = yt.playlist(current_user.playlist).videos.slice(0,50)
-      to_del2 = yt.playlist(current_user.playlist).videos.slice(50,50)
-
       # Add hot 100 into playlist by batch API
-      # Remove all videos in the playlist by batch API
       # Ref: https://developers.google.com/youtube/2.0/developers_guide_protocol_batch_processing
       #
-      builder1 = Nokogiri::XML::Builder.new do |xml|
-        xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
-          xml["batch"].operation("type"=>"update")
-          to_add1.each do |song|
-            xml.entry {
-              xml["batch"].operation("type"=>"insert")
-              xml.id_ song[:id]
-            }
-          end
-        }
-      end
-      prepare_request(r, builder1).run
+      0.upto(5) do
+        to_del = yt.playlist(pid).videos.slice(0, 25)
+        break if to_del.nil?
 
-      unless to_del1.nil?
-        builder2 = Nokogiri::XML::Builder.new do |xml|
+        builder = Nokogiri::XML::Builder.new do |xml|
           xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
             xml["batch"].operation("type"=>"update")
-            to_del1.each do |v|
+            to_del.each do |v|
               xml.entry {
                 xml["batch"].operation("type"=>"delete")
                 xml.id_ v.video_id
@@ -60,14 +42,17 @@ class WelcomeController < ApplicationController
             end
           }
         end
-        prepare_request(r, builder2).run
+        prepare_request(r, builder).run
       end
 
-      unless to_add2.nil?
-        builder3 = Nokogiri::XML::Builder.new do |xml|
+      0.upto(3) do |x|
+        to_add = Hot.last.songs.slice(25*x,25)
+        break if to_add.nil?
+
+        builder1 = Nokogiri::XML::Builder.new do |xml|
           xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
             xml["batch"].operation("type"=>"update")
-            to_add2.each do |song|
+            to_add.each do |song|
               xml.entry {
                 xml["batch"].operation("type"=>"insert")
                 xml.id_ song[:id]
@@ -75,23 +60,7 @@ class WelcomeController < ApplicationController
             end
           }
         end
-        prepare_request(r, builder3).run
-      end
-
-      unless to_del2.nil?
-        builder4 = Nokogiri::XML::Builder.new do |xml|
-          xml.feed("xmlns" => "http://www.w3.org/2005/Atom","xmlns:media" => "http://search.yahoo.com/mrss/", "xmlns:batch" => "http://schemas.google.com/gdata/batch", "xmlns:yt" => "http://gdata.youtube.com/schemas/2007") {
-            xml["batch"].operation("type"=>"update")
-            to_del2.each do |v|
-              xml.entry {
-                xml["batch"].operation("type"=>"delete")
-                xml.id_ v.video_id
-                xml.link("rel" => "edit", "type" => "application/atom+xml", "href" => "https://gdata.youtube.com/feeds/api/playlists/#{pid}/#{v.in_playlist_id}?v=2")
-              }
-            end
-          }
-        end
-        prepare_request(r, builder4).run
+        prepare_request(r, builder1).run
       end
 
       redirect_to root_path
@@ -110,4 +79,5 @@ class WelcomeController < ApplicationController
 
   def del_xml_builder(arr)
   end
+
 end
