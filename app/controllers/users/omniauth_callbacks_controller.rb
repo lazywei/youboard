@@ -5,11 +5,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         def #{provider}
           if not current_user.blank?
             current_user.bind_service(env["omniauth.auth"]) # Add an auth to existing
+            current_user.authorizations.
+              find_by_provider(#{provider}).
+              token = env["omniauth.auth"]["credentials"]["token"]
+            current_user.save!
             redirect_to user_path(current_user), :notice => "Successfully binded to #{provider}."
           else
             @user = User.find_or_create_for_#{provider}(env["omniauth.auth"])
 
             if @user.persisted?
+              current_user.authorizations.
+                find_by_provider(#{provider}).
+                token = env["omniauth.auth"]["credentials"]["token"]
+              current_user.save!
               flash[:notice] = "Sign in with #{provider.to_s.titleize} successfully."
               sign_in_and_redirect @user, :event => :authentication, :notice => "Login successfully."
             else
