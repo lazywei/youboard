@@ -26,8 +26,8 @@ class WelcomeController < ApplicationController
       # Add hot 100 into playlist by batch API
       # Ref: https://developers.google.com/youtube/2.0/developers_guide_protocol_batch_processing
       #
-      0.upto(5) do
-        to_del = yt.playlist(pid).videos.slice(0, 25)
+      0.upto(4) do
+        to_del = yt.playlist(pid).videos
         break if to_del.nil?
 
         builder = Nokogiri::XML::Builder.new do |xml|
@@ -45,8 +45,8 @@ class WelcomeController < ApplicationController
         prepare_request(r, builder).run
       end
 
-      0.upto(3) do |x|
-        to_add = Hot.last.songs.slice(25*x,25)
+      0.upto(2) do |x|
+        to_add = Hot.last.songs.slice(33*x,33)
         break if to_add.nil?
 
         builder1 = Nokogiri::XML::Builder.new do |xml|
