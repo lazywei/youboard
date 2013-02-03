@@ -48,6 +48,9 @@
                 <p>
                   <%= button_to "Subscribe", subscribe_path, :metohd => :post, :class => "btn" %>
                 </p>
+                <p>
+                <%= link_to "Check your personal playlist", "http://www.youtube.com/playlist?list=#{current_user.playlist}", :class => "btn" unless current_user.playlist.nil? %>
+                </p>
               <% else %>
                 <p>
                   <%= link_to "Sign in with YouTube", user_omniauth_authorize_path(:google_oauth2), :class => "btn" %>
