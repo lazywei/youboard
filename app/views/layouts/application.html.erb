@@ -28,13 +28,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Youboard</a>
-          <div class="container nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          <%= link_to "YouBoard", root_path, :class => "brand" %>
         </div>
       </div>
     </div>
@@ -56,7 +50,7 @@
                 </p>
               <% else %>
                 <p>
-                  <%= link_to "Sign in with Youtube", user_omniauth_authorize_path(:google_oauth2), :class => "btn" %>
+                  <%= link_to "Sign in with YouTube", user_omniauth_authorize_path(:google_oauth2), :class => "btn" %>
                 </p>
               <% end %>
             </div><!--/.well -->
