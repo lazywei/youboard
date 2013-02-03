@@ -27,7 +27,6 @@ class User
       User.new do |user|
         user.email = data["email"]
         user.email = "twitter+#{uid}@example.com" if provider == "twitter"
-        user.name = data["name"]
         user.password = Devise.friendly_token[0, 20]
         user.confirmed_at = Time.now()
         user.confirmation_token = nil
