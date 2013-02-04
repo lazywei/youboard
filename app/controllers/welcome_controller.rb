@@ -23,6 +23,7 @@ class WelcomeController < ApplicationController
       },
     )
 
+      len = []
       # Add hot 100 into playlist by batch API
       # Ref: https://developers.google.com/youtube/2.0/developers_guide_protocol_batch_processing
       #
@@ -42,7 +43,8 @@ class WelcomeController < ApplicationController
             end
           }
         end
-        prepare_request(r, builder).run
+        len << builder.to_xml.bytesize
+        #prepare_request(r, builder).run
       end
 
       0.upto(2) do |x|
@@ -60,10 +62,12 @@ class WelcomeController < ApplicationController
             end
           }
         end
-        prepare_request(r, builder1).run
+        len << builder1.to_xml.bytesize
+        #prepare_request(r, builder1).run
       end
 
-      redirect_to root_path
+      render :text => len
+      #redirect_to root_path
   end
 
   private
