@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def can_update_playlist?
-    (Time.now - 15.minutes > self.updated_playlist_at)
+    self.updated_playlist_at.nil? or (Time.now - 15.minutes > self.updated_playlist_at)
   end
 
   def bind_service(response)
