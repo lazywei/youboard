@@ -10,8 +10,6 @@ class WelcomeController < ApplicationController
         playlist = yt.add_playlist(:title => "BillBoard Hot 100", :description => "The collections for this week's BillBoard Hot 100 singles!")
         current_user.update_attributes(:playlist => playlist.playlist_id)
       end
-      current_user.updated_playlist_at = Time.now
-      current_user.save
       UpdateWorker.perform_async(current_user, 1) 
       flash[:notice] = 'Pleas wait minutes for playlist updating.'
     else

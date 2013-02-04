@@ -8,6 +8,8 @@ class UpdateWorker
   def perform(user, count)
     user = User.find(user["id"])
     return unless user.can_update_playlist?
+    user.updated_playlist_at = Time.now
+    user.save
     yt = user.yt_client
     pid = user.playlist
 

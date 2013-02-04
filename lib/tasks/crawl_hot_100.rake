@@ -25,9 +25,12 @@ task :crawl_hot_100 => :environment do
   end
 
   client = YouTubeIt::Client.new(:dev_key => 'AI39si4X8tG4AbBOrBJEPDLNYgm5L6tLhKOWi-spAE5sH4N9CS-3nKgExktTRBudmp6lwW0YyhzA4wRd0Qur4EXY-BjaOtTxsw')
-  result.each do |r|
-    id = client.videos_by(:query => r[:song]).videos[0].video_id.split(':').last
-    songs << ({:id => id}.merge(r))
+  0.upto(3) do |i|
+    result.slice(i*25, 25).each do |r|
+      id = client.videos_by(:query => r[:song]).videos[0].video_id.split(':').last
+      songs << ({:id => id}.merge(r))
+    end
+    sleep 15
   end
   Hot.create!(:songs => songs)
 end
