@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require "bundler/capistrano"
+load 'deploy/assets'
 
 set :application, "youboard.lazywei.com"
 set :repository, "git@git.lazywei.com:lazywei/youboard.git"
