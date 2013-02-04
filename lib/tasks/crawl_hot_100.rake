@@ -18,7 +18,7 @@ task :crawl_hot_100 => :environment do
   songs = []
   result = []
 
-  0.upto(9).each do |page|
+  0.upto(5).each do |page|
     r = Typhoeus::Request.new("http://www.billboard.com/charts/hot-100?page=#{page}", :method => :get)
     r.run
     result += parse(r.response.body)
