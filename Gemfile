@@ -61,3 +61,5 @@ gem 'omniauth-google-oauth2'
 gem 'youtube_it'
 gem 'nokogiri'
 gem 'typhoeus'
+
+gem 'sidekiq'

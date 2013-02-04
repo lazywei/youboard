@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require "bundler/capistrano"
+require 'sidekiq/capistrano'
 load 'deploy/assets'
 
 set :application, "youboard.lazywei.com"

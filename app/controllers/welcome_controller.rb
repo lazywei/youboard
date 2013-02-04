@@ -4,6 +4,18 @@ class WelcomeController < ApplicationController
   end
 
   def subscribe
+    if current_user.can_update_playlist?
+      current_user.updated_playlist_at = Time.now
+      current_user.save
+      UpdateWorker.perform_async(current_user, 1) 
+      flash[:notice] = 'Pleas wait minutes for playlist updating.'
+    else
+      flash[:notice] = 'We are updating your playlist, please wait.'
+    end
+    redirect_to root_path
+  end
+
+  def subscribe_old
     yt = current_user.yt_client
     if current_user.playlist.nil?
       playlist = yt.add_playlist(:title => "BillBoard Hot 100", :description => "The collections for this week's BillBoard Hot 100 singles!")
@@ -76,12 +88,6 @@ class WelcomeController < ApplicationController
     r.options[:headers]["Content-Length"] = builder.to_xml.length
     r.options[:body] = builder.to_xml
     return r
-  end
-
-  def add_xml_builder(arr)
-  end
-
-  def del_xml_builder(arr)
   end
 
 end

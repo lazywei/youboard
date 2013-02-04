@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :playlist
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :playlist, :updated_playlist_at
   # attr_accessible :title, :body
   has_many :authorizations, :dependent => :destroy
   
@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
       client_id: Setting.google_oauth2_token,
       client_secret: Setting.google_oauth2_secret,
       dev_key: dev_key, expires_at: "3600")
+  end
+
+  def can_update_playlist?
+    (Time.now - 15.minutes > self.updated_playlist_at)
   end
 
   def bind_service(response)
