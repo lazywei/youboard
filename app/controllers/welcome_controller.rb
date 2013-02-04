@@ -5,6 +5,11 @@ class WelcomeController < ApplicationController
 
   def subscribe
     if current_user.can_update_playlist?
+      yt = current_user.yt_client
+      if current_user.playlist.nil?
+        playlist = yt.add_playlist(:title => "BillBoard Hot 100", :description => "The collections for this week's BillBoard Hot 100 singles!")
+        current_user.update_attributes(:playlist => playlist.playlist_id)
+      end
       current_user.updated_playlist_at = Time.now
       current_user.save
       UpdateWorker.perform_async(current_user, 1) 
