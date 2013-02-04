@@ -185,6 +185,9 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.3.6)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
     typhoeus (0.5.4)
       ethon (~> 0.5.7)
     tzinfo (0.3.35)
@@ -227,6 +230,7 @@ DEPENDENCIES
   settingslogic
   simple_form
   sqlite3
+  turbo-sprockets-rails3
   typhoeus
   uglifier (>= 1.0.3)
   venus!
