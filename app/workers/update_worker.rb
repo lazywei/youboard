@@ -27,6 +27,7 @@ class UpdateWorker
     0.upto(12) do |i|
       videos = Hot.last.songs.slice(8*i, 8)
       p "videos size = #{videos.size}"
+      break if videos.size == 0
       videos.each do |v|
         yt.add_video_to_playlist(pid, v[:id])
         p "Add #{v[:id]}, #{v[:song]}"
