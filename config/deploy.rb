@@ -11,6 +11,8 @@ set :scm, :git
 set :deploy_to, "/var/www/#{application}"
 set :deploy_via, :remote_cache
 
+set :user, "lazywei"
+set :use_sudo, false
 
 role :web, application                         # Your HTTP server, Apache/etc
 role :app, application                         # This may be the same as your `Web` server
