@@ -44,3 +44,26 @@ namespace :deploy do
 end
 
 after "deploy:update_code", "deploy:copy_config_files"
+
+
+# For "cap tail_logs"
+
+desc "tail production log files" 
+task :tail_logs, :roles => :app do
+  run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
+    puts  # for an extra line break before the host name
+    puts "#{channel[:host]}: #{data}" 
+    break if stream == :err    
+  end
+end
+
+# For "cap tail_sidekiq_logs"
+
+desc "tail sidekiq log files" 
+task :tail_sidekiq_logs, :roles => :app do
+  run "tail -f #{shared_path}/log/sidekiq.log" do |channel, stream, data|
+    puts  # for an extra line break before the host name
+    puts "#{channel[:host]}: #{data}" 
+    break if stream == :err    
+  end
+end
