@@ -33,7 +33,8 @@ class User < ActiveRecord::Base
   def update_token(response)
     provider = response["provider"]
     auth = authorizations.find_by_provider(provider)
-    auth.update_attributes(:token => response["credentials"]["token"])
+    credentials = response["credentials"]
+    auth.update_attributes(:token => credentials["token"], :refresh_token => credentials["refresh_token"], :expires_at => Time.at(credentials["expires_at"]))
   end
 
   def can_bind_to

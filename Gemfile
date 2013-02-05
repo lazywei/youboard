@@ -63,3 +63,4 @@ gem 'nokogiri'
 gem 'typhoeus'
 
 gem 'sidekiq'
+gem 'google-api-client'
