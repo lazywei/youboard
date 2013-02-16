@@ -5,6 +5,8 @@ defaults: &defaults
   google_oauth2_secret: "1a2b3c4d5e6f7g8h9i12345678987654"
   providers: ["facebook", "google_oauth2"]
 
+  hot_type: ["xiami_time_week", "nz_top_40", "billboard_hot_100"]
+
   app_name: ""
   host: "localhost"
   facebook_app_id: 

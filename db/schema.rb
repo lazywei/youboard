@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215143339) do
+ActiveRecord::Schema.define(:version => 20130216051953) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -28,7 +28,16 @@ ActiveRecord::Schema.define(:version => 20130215143339) do
     t.text     "songs"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "type"
+    t.string   "hot_type"
+  end
+
+  create_table "playlists", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "p_id"
+    t.string   "hot_type"
+    t.datetime "last_updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -44,8 +53,6 @@ ActiveRecord::Schema.define(:version => 20130215143339) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "playlist"
-    t.datetime "updated_playlist_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

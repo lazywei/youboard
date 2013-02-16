@@ -51,7 +51,7 @@
                   <%= link_to "Logout", logout_path, :class => "btn" %>
                 </p>
                 <p>
-                  <% if current_user.can_update_playlist? %>
+                  <% if true %>
                     <%= button_to "Subscribe", subscribe_path, :metohd => :post, :class => "btn" %>
                   <% else %>
                     <span class="btn disabled">Updated</span>

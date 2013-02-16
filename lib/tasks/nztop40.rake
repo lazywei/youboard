@@ -1,7 +1,7 @@
 namespace :crawler do
   desc "Crawl the charts from xiami.com"  
   task :nztop40 => :environment do
-
+    @finder = Youtube.new
     r = Typhoeus::Request.get('http://nztop40.co.nz/')
     doc = Nokogiri::HTML(r.body)
     result = []
@@ -10,10 +10,10 @@ namespace :crawler do
         :song => song.at_css('.title').content,
         :artist => song.at_css('.artist').content
       }
-      tmp[:id] = Youtube.find_video_id("#{tmp[:song]} #{tmp[:artist]}")
+      tmp[:id] = @finder.find_video_id("#{tmp[:song]} #{tmp[:artist]}")
       result << tmp
     end
 
-    Hot.create!(:songs => result, :type => 'nztop40')
+    Hot.create!(:songs => result, :hot_type => Setting.hot_type[1])
   end
 end
