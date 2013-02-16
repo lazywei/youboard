@@ -64,3 +64,5 @@ gem 'typhoeus'
 
 gem 'sidekiq'
 gem 'google-api-client', :git => 'git://github.com/google/google-api-ruby-client.git'
+
+gem 'high_voltage'

@@ -45,7 +45,7 @@ class UpdateWorker
 
     0.upto(1) do |i|
       videos = Hot.where(:hot_type => args["type"]).last.songs.slice(50*i, 50)
-      break if videos.nil?
+      break if (videos.nil? or videos.empty?)
 
       videos.each do |v|
         r = client.execute!(
