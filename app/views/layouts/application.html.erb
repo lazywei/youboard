@@ -52,13 +52,18 @@
                 </p>
                 <p>
                   <% if true %>
-                    <%= button_to "Subscribe", subscribe_path, :metohd => :post, :class => "btn" %>
+                    <%= form_tag subscribe_path, :method => :post do %>
+                      <%= select_tag "hot_type_id", options_for_select(Setting.hot_type.each_with_index.map {|x, i| [x.humanize, i]}), :class => "span2" %>
+                      <%= button_tag "Subscribe", :class => "btn" %>
+                    <% end %>
                   <% else %>
                     <span class="btn disabled">Updated</span>
                   <% end %>
                 </p>
                 <p>
-                <%= link_to "Your personal playlist", "http://www.youtube.com/playlist?list=#{current_user.playlist}", :class => "btn", :target => :_blank unless current_user.playlist.nil? %>
+                <% current_user.playlists.each do |p| %>
+                  <%= link_to "Your personal playlist", "http://www.youtube.com/playlist?list=#{p.p_id}", :class => "btn", :target => :_blank %>
+                <% end %>
                 </p>
               <% else %>
                 <p>
