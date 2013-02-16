@@ -6,8 +6,6 @@ namespace :crawler do
 
     desc "Crawl the hot 100"  
     task :hot_100 => :environment do
-      @finder = Youtube.new
-
       def parse(html)
         doc = Nokogiri::HTML(html)
         result = []
@@ -23,7 +21,6 @@ namespace :crawler do
         return result
       end
 
-      songs = []
       result = []
 
       0.upto(5).each do |page|
@@ -31,12 +28,10 @@ namespace :crawler do
         result += parse(r.body)
       end
 
-      result.each do |song|
-        id = @finder.find_video_id("#{song[:song]} #{song[:artist]}")
-        songs << {:id => id}.merge(song)
-      end
+      ids = Youtube.new.batch_search(result.map {|x| "#{x[:song]} #{x[:artist]}"})
+      ids.each_with_index {|id, index| result[index][:id] = id}
 
-      Hot.create!(:songs => songs, :hot_type => Setting.hot_type[2])
+      Hot.create!(:songs => result, :hot_type => Setting.hot_type[2])
     end
   end
 end

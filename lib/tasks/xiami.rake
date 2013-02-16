@@ -8,13 +8,13 @@ namespace :crawler do
       
       result = []
       doc.css('table.track_list td.song_name').each do |song|
-        tmp =  {
+        result << {
           :song => song.css('a')[0].content,
           :artist => song.css('a')[1].content
         }
-        tmp[:id] = finder.find_video_id(tmp.map{|x| x[0]}.join(' '))
-        result << tmp
       end
+      ids = Youtube.new.batch_search(result.map {|x| "#{x[:song]} #{x[:artist]}"})
+      ids.each_with_index {|id, index| result[index][:id] = id}
       return result
     end
 

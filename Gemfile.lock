@@ -1,4 +1,19 @@
 GIT
+  remote: git://github.com/google/google-api-ruby-client.git
+  revision: fee207e8bdb780389ad385bd831c8f11f0793ac6
+  specs:
+    google-api-client (0.6.1)
+      addressable (>= 2.3.2)
+      autoparse (>= 0.3.2)
+      extlib (>= 0.9.15)
+      faraday (~> 0.8.4)
+      jwt (>= 0.1.5)
+      launchy (>= 2.1.1)
+      multi_json (>= 1.0.0)
+      signet (>= 0.4.4)
+      uuidtools (>= 2.1.0)
+
+GIT
   remote: git://github.com/lazywei/venus.git
   revision: 86da8dd02c7159dc3014d6d5e8ad03971a8e649c
   specs:
@@ -87,16 +102,6 @@ GEM
     faraday (0.8.4)
       multipart-post (~> 1.1)
     ffi (1.2.1)
-    google-api-client (0.6.2)
-      addressable (>= 2.3.2)
-      autoparse (>= 0.3.2)
-      extlib (>= 0.9.15)
-      faraday (~> 0.8.4)
-      jwt (>= 0.1.5)
-      launchy (>= 2.1.1)
-      multi_json (>= 1.0.0)
-      signet (>= 0.4.4)
-      uuidtools (>= 2.1.0)
     hashie (1.2.0)
     highline (1.6.15)
     hike (1.2.1)
@@ -112,7 +117,7 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    launchy (2.1.2)
+    launchy (2.2.0)
       addressable (~> 2.3)
     magic_encoding (0.0.2)
     mail (2.4.4)
@@ -254,7 +259,7 @@ DEPENDENCIES
   capistrano
   coffee-rails (~> 3.2.1)
   devise (~> 2.1.2)
-  google-api-client
+  google-api-client!
   jquery-rails
   kaminari
   magic_encoding
