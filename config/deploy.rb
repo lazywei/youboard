@@ -3,14 +3,16 @@ require "bundler/capistrano"
 require 'sidekiq/capistrano'
 load 'deploy/assets'
 
+set :default_shell, "bash -l"
+
 set :application, "youboard.lazywei.com"
-set :repository, "git@git.lazywei.com:lazywei/youboard.git"
+set :repository, "git@github.com:lazywei/youboard.git"
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 set :scm, :git
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/home/lazywei/www/#{application}"
 set :deploy_via, :remote_cache
 
 set :user, "lazywei"
